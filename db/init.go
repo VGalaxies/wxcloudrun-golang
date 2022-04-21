@@ -5,6 +5,8 @@ import (
 	"os"
 	"time"
 
+	"wxcloudrun-golang/db/model"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -27,6 +29,8 @@ func Init() error {
 	fmt.Println("start init mysql with ", source)
 
 	db, err := gorm.Open(mysql.Open(source), &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+		SkipDefaultTransaction:                   true,
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // use singular table name, table for `User` would be `user` with this option enabled
 		}})
@@ -47,6 +51,11 @@ func Init() error {
 	sqlDB.SetMaxOpenConns(200)
 	// 设置了连接可复用的最大时间
 	sqlDB.SetConnMaxLifetime(time.Hour)
+
+	migrator := db.Migrator()
+	if !migrator.HasTable(&model.BookModel{}) {
+		migrator.CreateTable(&model.BookModel{})
+	}
 
 	dbInstance = db
 
