@@ -4,24 +4,15 @@ import (
 	"wxcloudrun-golang/db/model"
 )
 
-// CounterInterface 计数器数据模型接口
-type CounterInterface interface {
-	GetCounter(id int32) (*model.CounterModel, error)
-	UpsertCounter(counter *model.CounterModel) error
-	ClearCounter(id int32) error
-}
-
-// CounterInterfaceImp 计数器数据模型实现
-type CounterInterfaceImp struct{}
-
-// Imp 实现实例
-var Imp CounterInterface = &CounterInterfaceImp{}
-
-// demo
+// 书籍数据模型接口
 type BookInterface interface {
-	GetBookByName(name string) (*model.BookModel, error)
+	GetBookByName(string) (*[]model.BookModel, error)
+	GetBookByNameFzf(string) (*[]model.BookModel, error)
+	GetBookByNameCate(string) (*[]model.BookModel, error)
 }
 
+// 书籍数据模型实现
 type BookInterfaceImp struct{}
 
+// 书籍数据模型实现实例
 var BookImp BookInterface = &BookInterfaceImp{}

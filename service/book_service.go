@@ -33,22 +33,28 @@ func BookGetHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(msg)
 }
 
-func BookGetDispatch(r *http.Request) (*model.BookModel, error) {
+func BookGetDispatch(r *http.Request) (*[]model.BookModel, error) {
 	action, hint, err := getBody(r)
 	if err != nil {
 		return nil, err
 	}
 
-	var model *model.BookModel
+	var model *[]model.BookModel
 	if action == "exact" {
 		model, err = dao.BookImp.GetBookByName(hint)
 		if err != nil {
 			return nil, err
 		}
 	} else if action == "fuzzy" {
-
+		model, err = dao.BookImp.GetBookByNameFzf(hint)
+		if err != nil {
+			return nil, err
+		}
 	} else if action == "category" {
-
+		model, err = dao.BookImp.GetBookByNameCate(hint)
+		if err != nil {
+			return nil, err
+		}
 	} else {
 		err = fmt.Errorf("参数 action : %s 错误", action)
 	}

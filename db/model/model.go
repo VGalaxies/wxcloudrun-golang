@@ -1,18 +1,6 @@
 package model
 
-import (
-	"time"
-)
-
-// CounterModel 计数器模型
-type CounterModel struct {
-	Id        int32     `gorm:"column:id" json:"id"`
-	Count     int32     `gorm:"column:count" json:"count"`
-	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
-	UpdatedAt time.Time `gorm:"column:updatedAt" json:"updatedAt"`
-}
-
-// demo
+// 书籍模型
 type BookModel struct {
 	Id          int32
 	Name        string
@@ -21,6 +9,7 @@ type BookModel struct {
 	Description string
 }
 
+// 书籍分类模型
 type CategoryModel struct {
 	Id   int32
 	Name string
