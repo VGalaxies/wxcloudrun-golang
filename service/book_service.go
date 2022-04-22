@@ -10,11 +10,13 @@ import (
 )
 
 func BookGetHandler(w http.ResponseWriter, r *http.Request) {
-  fmt.Println("hit BookGetHandler")
+	fmt.Println("hit BookGetHandler")
 
 	res := &JsonResult{}
 	if r.Method == http.MethodGet {
+		fmt.Println("hit BookGetHandler MethodGet")
 		model, err := BookGetDispatch(r)
+    fmt.Println(model)
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
@@ -41,26 +43,28 @@ func BookGetDispatch(r *http.Request) (*model.BookModel, error) {
 		return nil, err
 	}
 
-  hint, err := getHint(r)
-  if err != nil {
-    return nil, err
-  }
+	hint, err := getHint(r)
+	if err != nil {
+		return nil, err
+	}
 
-  var model *model.BookModel
-  if action == "exact" {
-    model, err = dao.BookImp.GetBookByName(hint)
-    if err != nil {
-      return nil, err
-    }
-  } else if action == "fuzzy" {
+	fmt.Println(action, hint)
 
-  } else if action == "category" {
+	var model *model.BookModel
+	if action == "exact" {
+		model, err = dao.BookImp.GetBookByName(hint)
+		if err != nil {
+			return nil, err
+		}
+	} else if action == "fuzzy" {
 
-  } else {
+	} else if action == "category" {
+
+	} else {
 		err = fmt.Errorf("参数 action : %s 错误", action)
-  }
+	}
 
-  return model, err
+	return model, err
 }
 
 func getHint(r *http.Request) (string, error) {
