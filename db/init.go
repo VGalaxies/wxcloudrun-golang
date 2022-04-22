@@ -96,7 +96,7 @@ func InitCategory() error {
 		}
 	}
 
-	tx := dbInstance.Create(&[]model.BookModel{
+	tx := dbInstance.Create(&[]model.CategoryModel{
 		{Id: 1, Name: "Operating System"},
 		{Id: 2, Name: "Theoretical Computer Science"},
 		{Id: 3, Name: "Computer Graphics"},
