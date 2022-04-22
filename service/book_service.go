@@ -60,6 +60,7 @@ func getBody(r *http.Request) (string, string, error) {
 	decoder := json.NewDecoder(r.Body)
 	body := make(map[string]interface{})
 	if err := decoder.Decode(&body); err != nil {
+    fmt.Println("why eof ...")
 		return "", "", err
 	}
 	defer r.Body.Close()
