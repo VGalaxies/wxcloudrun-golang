@@ -5,6 +5,8 @@ import (
 	"os"
 	"time"
 
+	"wxcloudrun-golang/db/model"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -50,11 +52,47 @@ func Init() error {
 	// 设置了连接可复用的最大时间
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
+  // init table
+  if err = InitBook(); err != nil {
+		fmt.Println("DB Init error,err=", err.Error())
+		return err
+  } 
+
+  if err = InitCategory(); err != nil {
+		fmt.Println("DB Init error,err=", err.Error())
+		return err
+  } 
+
 	dbInstance = db
 
 	fmt.Println("finish init mysql with ", source)
 	return nil
 }
+
+func InitBook() error {
+	migrator := dbInstance.Migrator()
+	if !migrator.HasTable(&model.BookModel{}) {
+    err := migrator.CreateTable(model.BookModel{})
+    if err != nil {
+      return err
+    }
+	}
+
+	return nil
+}
+
+func InitCategory() error {
+	migrator := dbInstance.Migrator()
+	if !migrator.HasTable(&model.CategoryModel{}) {
+    err := migrator.CreateTable(model.CategoryModel{})
+    if err != nil {
+      return err
+    }
+	}
+
+	return nil
+}
+
 
 // Get ...
 func Get() *gorm.DB {
