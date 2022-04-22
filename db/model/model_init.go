@@ -1,31 +1,8 @@
 package model
 
 import (
-	"time"
 	"wxcloudrun-golang/db"
 )
-
-// CounterModel 计数器模型
-type CounterModel struct {
-	Id        int32     `gorm:"column:id" json:"id"`
-	Count     int32     `gorm:"column:count" json:"count"`
-	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
-	UpdatedAt time.Time `gorm:"column:updatedAt" json:"updatedAt"`
-}
-
-// demo
-type BookModel struct {
-	Id          int32
-	Name        string
-	Category    int32
-	Author      string
-	Description string
-}
-
-type CategoryModel struct {
-	Id   int32
-	Name string
-}
 
 func InitBook() error {
 	migrator := db.Get().Migrator()
@@ -62,3 +39,4 @@ func InitCategory() error {
 
 	return res.Error
 }
+

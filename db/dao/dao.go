@@ -36,7 +36,7 @@ func (imp *BookInterfaceImp) GetBookByName(name string) (*model.BookModel, error
   var book = new(model.BookModel)
 
   cli := db.Get()
-  err = cli.Table("Books").Where("name = ?", name).First(book).Error
+  err = cli.Model(&model.BookModel{}).Where("name = ?", name).First(book).Error
 
   return book, err
 }
