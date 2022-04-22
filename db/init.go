@@ -52,6 +52,8 @@ func Init() error {
 	// 设置了连接可复用的最大时间
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
+	dbInstance = db
+
   // init table
   if err = InitBook(); err != nil {
 		fmt.Println("DB Init error,err=", err.Error())
@@ -62,8 +64,6 @@ func Init() error {
 		fmt.Println("DB Init error,err=", err.Error())
 		return err
   } 
-
-	dbInstance = db
 
 	fmt.Println("finish init mysql with ", source)
 	return nil
