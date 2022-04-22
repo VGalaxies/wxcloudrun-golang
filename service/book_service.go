@@ -10,6 +10,8 @@ import (
 )
 
 func BookGetHandler(w http.ResponseWriter, r *http.Request) {
+  fmt.Println("hit BookGetHandler")
+
 	res := &JsonResult{}
 	if r.Method == http.MethodGet {
 		model, err := BookGetDispatch(r)
