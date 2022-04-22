@@ -16,7 +16,7 @@ func BookGetHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		fmt.Println("hit BookGetHandler MethodGet")
 		model, err := BookGetDispatch(r)
-    fmt.Println(model)
+    fmt.Println(model, err)
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
