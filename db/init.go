@@ -78,13 +78,7 @@ func InitBook() error {
 		}
 	}
 
-	tx := dbInstance.Create(&[]model.BookModel{
-		{Id: 1, Name: "Operating Systems: Three Easy Pieces", CategoryId: 1, Author: "Remzi H. Arpaci-Dusseau", Description: "", ImageLink: ""},
-		{Id: 2, Name: "Models of Computation", CategoryId: 2, Author: "Jeff Erickson", Description: "", ImageLink: ""},
-		{Id: 3, Name: "Fundamentals of Computer Graphics", CategoryId: 3, Author: "Peter Shirley", Description: "", ImageLink: ""},
-	})
-
-	return tx.Error
+	return nil
 }
 
 func InitCategory() error {
@@ -96,13 +90,7 @@ func InitCategory() error {
 		}
 	}
 
-	tx := dbInstance.Create(&[]model.CategoryModel{
-		{Id: 1, Name: "Operating System"},
-		{Id: 2, Name: "Theoretical Computer Science"},
-		{Id: 3, Name: "Computer Graphics"},
-	})
-
-	return tx.Error
+	return nil
 }
 
 // Get ...
