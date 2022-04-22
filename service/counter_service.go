@@ -13,13 +13,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// JsonResult 返回结构
-type JsonResult struct {
-	Code     int         `json:"code"`
-	ErrorMsg string      `json:"errorMsg,omitempty"`
-	Data     interface{} `json:"data"`
-}
-
 // IndexHandler 计数器接口
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := getIndex()
@@ -28,6 +21,15 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprint(w, data)
+}
+
+// getIndex 获取主页
+func getIndex() (string, error) {
+	b, err := ioutil.ReadFile("./index.html")
+	if err != nil {
+		return "", err
+	}
+	return string(b), nil
 }
 
 // CounterHandler 计数器接口
@@ -130,30 +132,4 @@ func getCurrentCounter() (*model.CounterModel, error) {
 	}
 
 	return counter, nil
-}
-
-// getAction 获取action
-func getAction(r *http.Request) (string, error) {
-	decoder := json.NewDecoder(r.Body)
-	body := make(map[string]interface{})
-	if err := decoder.Decode(&body); err != nil {
-		return "", err
-	}
-	defer r.Body.Close()
-
-	action, ok := body["action"]
-	if !ok {
-		return "", fmt.Errorf("缺少 action 参数")
-	}
-
-	return action.(string), nil
-}
-
-// getIndex 获取主页
-func getIndex() (string, error) {
-	b, err := ioutil.ReadFile("./index.html")
-	if err != nil {
-		return "", err
-	}
-	return string(b), nil
 }

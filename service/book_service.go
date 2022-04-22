@@ -11,7 +11,7 @@ import (
 
 func BookGetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
-	if r.Method == http.MethodGet {
+	if r.Method == http.MethodPost {
 		model, err := BookGetDispatch(r)
 		if err != nil {
 			res.Code = -1
@@ -54,26 +54,4 @@ func BookGetDispatch(r *http.Request) (*model.BookModel, error) {
 	}
 
 	return model, err
-}
-
-func getBody(r *http.Request) (string, string, error) {
-	decoder := json.NewDecoder(r.Body)
-	body := make(map[string]interface{})
-	if err := decoder.Decode(&body); err != nil {
-    fmt.Println("why eof ...")
-		return "", "", err
-	}
-	defer r.Body.Close()
-
-	action, ok := body["action"]
-	if !ok {
-		return "", "", fmt.Errorf("缺少 action 参数")
-	}
-
-	hint, ok := body["hint"]
-	if !ok {
-		return "", "", fmt.Errorf("缺少 hint 参数")
-	}
-
-	return action.(string), hint.(string), nil
 }
