@@ -32,11 +32,11 @@ func (imp *CounterInterfaceImp) GetCounter(id int32) (*model.CounterModel, error
 
 // demo
 func (imp *BookInterfaceImp) GetBookByName(name string) (*model.BookModel, error) {
-  var err error
-  var book = new(model.BookModel)
+	var err error
+	var book = new(model.BookModel)
 
-  cli := db.Get()
-  err = cli.Model(&model.BookModel{}).Where("name = ?", name).First(book).Error
+	cli := db.Get()
+	err = cli.Model(&model.BookModel{}).Where("name = ?", name).First(book).Error
 
-  return book, err
+	return book, err
 }

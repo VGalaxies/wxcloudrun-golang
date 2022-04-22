@@ -10,13 +10,9 @@ import (
 )
 
 func BookGetHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("hit BookGetHandler")
-
 	res := &JsonResult{}
 	if r.Method == http.MethodGet {
-		fmt.Println("hit BookGetHandler MethodGet")
 		model, err := BookGetDispatch(r)
-    fmt.Println(model, err)
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
@@ -38,17 +34,10 @@ func BookGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func BookGetDispatch(r *http.Request) (*model.BookModel, error) {
-	action, err := getAction(r)
+	action, hint, err := getBody(r)
 	if err != nil {
 		return nil, err
 	}
-
-	hint, err := getHint(r)
-	if err != nil {
-		return nil, err
-	}
-
-	fmt.Println(action, hint)
 
 	var model *model.BookModel
 	if action == "exact" {
@@ -67,18 +56,23 @@ func BookGetDispatch(r *http.Request) (*model.BookModel, error) {
 	return model, err
 }
 
-func getHint(r *http.Request) (string, error) {
+func getBody(r *http.Request) (string, string, error) {
 	decoder := json.NewDecoder(r.Body)
 	body := make(map[string]interface{})
 	if err := decoder.Decode(&body); err != nil {
-		return "", err
+		return "", "", err
 	}
 	defer r.Body.Close()
 
-	action, ok := body["hint"]
+	action, ok := body["action"]
 	if !ok {
-		return "", fmt.Errorf("缺少 hint 参数")
+		return "", "", fmt.Errorf("缺少 action 参数")
 	}
 
-	return action.(string), nil
+	hint, ok := body["hint"]
+	if !ok {
+		return "", "", fmt.Errorf("缺少 hint 参数")
+	}
+
+	return action.(string), hint.(string), nil
 }

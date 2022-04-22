@@ -17,10 +17,9 @@ type CounterInterfaceImp struct{}
 // Imp 实现实例
 var Imp CounterInterface = &CounterInterfaceImp{}
 
-
 // demo
 type BookInterface interface {
-  GetBookByName(name string) (*model.BookModel, error)
+	GetBookByName(name string) (*model.BookModel, error)
 }
 
 type BookInterfaceImp struct{}

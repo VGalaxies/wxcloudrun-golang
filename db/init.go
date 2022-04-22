@@ -54,16 +54,16 @@ func Init() error {
 
 	dbInstance = db
 
-  // init table
-  if err = InitBook(); err != nil {
+	// init table
+	if err = InitBook(); err != nil {
 		fmt.Println("DB Init error,err=", err.Error())
 		return err
-  } 
+	}
 
-  if err = InitCategory(); err != nil {
+	if err = InitCategory(); err != nil {
 		fmt.Println("DB Init error,err=", err.Error())
 		return err
-  } 
+	}
 
 	fmt.Println("finish init mysql with ", source)
 	return nil
@@ -72,10 +72,10 @@ func Init() error {
 func InitBook() error {
 	migrator := dbInstance.Migrator()
 	if !migrator.HasTable(&model.BookModel{}) {
-    err := migrator.CreateTable(model.BookModel{})
-    if err != nil {
-      return err
-    }
+		err := migrator.CreateTable(model.BookModel{})
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -84,15 +84,14 @@ func InitBook() error {
 func InitCategory() error {
 	migrator := dbInstance.Migrator()
 	if !migrator.HasTable(&model.CategoryModel{}) {
-    err := migrator.CreateTable(model.CategoryModel{})
-    if err != nil {
-      return err
-    }
+		err := migrator.CreateTable(model.CategoryModel{})
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
 }
-
 
 // Get ...
 func Get() *gorm.DB {
