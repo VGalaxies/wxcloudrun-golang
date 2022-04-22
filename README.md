@@ -43,7 +43,7 @@
 #### 响应结果
 
 - `code` 错误码
-- `data` 对象数组
+- `data` 对象或对象数组
 - `errorMsg` 错误信息
 
 ##### 响应结果示例
@@ -61,3 +61,21 @@
 ```
 curl -X POST -H 'content-type: application/json' -d '{"action": "exact", "hint": "Models of Computation"}' https://<云托管服务域名>/api/book
 ```
+
+### `POST /api/category`
+
+获取书籍分类信息
+
+#### 请求参数
+
+- `action` - `string` 类型
+  - `single` - 根据 ID 返回对应分类
+  - `all` - 返回全部分类
+- `hint` - `string` 类型
+  - `categoryId` - int 字面量
+
+#### 响应结果
+
+- `code` 错误码
+- `data` 对象或对象数组
+- `errorMsg` 错误信息
