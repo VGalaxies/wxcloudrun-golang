@@ -3,7 +3,7 @@ package model
 // 书籍模型
 type BookModel struct {
 	Id          int32
-	Name        string
+	Name        string `gorm:"unique"`
 	CategoryId  int32
 	Author      string
 	Description string

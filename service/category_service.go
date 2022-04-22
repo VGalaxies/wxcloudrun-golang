@@ -8,10 +8,10 @@ import (
 	"wxcloudrun-golang/db/dao"
 )
 
-func BookGetHandler(w http.ResponseWriter, r *http.Request) {
+func CategoryGetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	if r.Method == http.MethodPost {
-		model, err := BookGetDispatch(r)
+		model, err := CategoryGetDispatch(r)
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
@@ -35,25 +35,20 @@ func BookGetHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(msg)
 }
 
-func BookGetDispatch(r *http.Request) (interface{}, error) {
+func CategoryGetDispatch(r *http.Request) (interface{}, error) {
 	action, hint, err := getBody(r)
 	if err != nil {
 		return nil, err
 	}
 
 	var model interface{}
-	if action == "exact" {
-		model, err = dao.BookImp.GetBookByName(hint)
+	if action == "single" {
+		model, err = dao.CategoryImp.GetCategory(hint)
 		if err != nil {
 			return nil, err
 		}
-	} else if action == "fuzzy" {
-		model, err = dao.BookImp.GetBookByNameFzf(hint)
-		if err != nil {
-			return nil, err
-		}
-	} else if action == "category" {
-		model, err = dao.BookImp.GetBookByNameCate(hint)
+	} else if action == "all" {
+		model, err = dao.CategoryImp.GetCategoryAll()
 		if err != nil {
 			return nil, err
 		}
