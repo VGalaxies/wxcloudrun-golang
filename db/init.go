@@ -5,8 +5,6 @@ import (
 	"os"
 	"time"
 
-	"wxcloudrun-golang/db/model"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -51,11 +49,6 @@ func Init() error {
 	sqlDB.SetMaxOpenConns(200)
 	// 设置了连接可复用的最大时间
 	sqlDB.SetConnMaxLifetime(time.Hour)
-
-	migrator := db.Migrator()
-	if !migrator.HasTable(&model.BookModel{}) {
-		migrator.CreateTable(&model.BookModel{})
-	}
 
 	dbInstance = db
 
