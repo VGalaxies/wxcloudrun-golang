@@ -4,9 +4,10 @@ package model
 type BookModel struct {
 	Id          int32
 	Name        string
-	Category    int32
+	CategoryId  int32
 	Author      string
 	Description string
+	ImageLink   string
 }
 
 // 书籍分类模型

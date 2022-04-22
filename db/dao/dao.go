@@ -14,8 +14,11 @@ func (imp *BookInterfaceImp) GetBookByName(name string) (*[]model.BookModel, err
 
 	cli := db.Get()
 	tx := cli.Model(&model.BookModel{}).Where("name = ?", name).Find(books)
-	if tx.RowsAffected != 1 {
+	if tx.RowsAffected > 1 {
 		err = errors.New("duplicated book name")
+		return nil, err
+	} else if tx.RowsAffected == 0 {
+		err = errors.New("record not found")
 		return nil, err
 	}
 	err = tx.Error
@@ -28,7 +31,13 @@ func (imp *BookInterfaceImp) GetBookByNameFzf(name string) (*[]model.BookModel, 
 	var books = new([]model.BookModel)
 
 	cli := db.Get()
-	err = cli.Model(&model.BookModel{}).Where("name LIKE ?", fmt.Sprintf("%%%s%%", name)).Find(books).Error
+	tx := cli.Model(&model.BookModel{}).Where("name LIKE ?", fmt.Sprintf("%%%s%%", name)).Find(books)
+
+	if tx.RowsAffected == 0 {
+		err = errors.New("record not found")
+		return nil, err
+	}
+	err = tx.Error
 
 	return books, err
 }
@@ -44,7 +53,13 @@ func (imp *BookInterfaceImp) GetBookByNameCate(categoryIdStr string) (*[]model.B
 	}
 
 	cli := db.Get()
-	err = cli.Model(&model.BookModel{}).Where("Category = ?", categoryId).Find(books).Error
+	tx := cli.Model(&model.BookModel{}).Where("category_id = ?", categoryId).Find(books)
+
+	if tx.RowsAffected == 0 {
+		err = errors.New("record not found")
+		return nil, err
+	}
+	err = tx.Error
 
 	return books, err
 }

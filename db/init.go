@@ -35,13 +35,13 @@ func Init() error {
 			SingularTable: true, // use singular table name, table for `User` would be `user` with this option enabled
 		}})
 	if err != nil {
-		fmt.Println("DB Open error,err=", err.Error())
+		fmt.Println("DB Open error, err = ", err.Error())
 		return err
 	}
 
 	sqlDB, err := db.DB()
 	if err != nil {
-		fmt.Println("DB Init error,err=", err.Error())
+		fmt.Println("DB Init error, err = ", err.Error())
 		return err
 	}
 
@@ -56,12 +56,12 @@ func Init() error {
 
 	// init table
 	if err = InitBook(); err != nil {
-		fmt.Println("DB Init error,err=", err.Error())
+		fmt.Println("DB Init error, err = ", err.Error())
 		return err
 	}
 
 	if err = InitCategory(); err != nil {
-		fmt.Println("DB Init error,err=", err.Error())
+		fmt.Println("DB Init error, err = ", err.Error())
 		return err
 	}
 
@@ -78,7 +78,13 @@ func InitBook() error {
 		}
 	}
 
-	return nil
+	tx := dbInstance.Create(&[]model.BookModel{
+		{Id: 1, Name: "Operating Systems: Three Easy Pieces", CategoryId: 1, Author: "Remzi H. Arpaci-Dusseau", Description: "", ImageLink: ""},
+		{Id: 2, Name: "Models of Computation", CategoryId: 2, Author: "Jeff Erickson", Description: "", ImageLink: ""},
+		{Id: 3, Name: "Fundamentals of Computer Graphics", CategoryId: 3, Author: "Peter Shirley", Description: "", ImageLink: ""},
+	})
+
+	return tx.Error
 }
 
 func InitCategory() error {
@@ -90,7 +96,13 @@ func InitCategory() error {
 		}
 	}
 
-	return nil
+	tx := dbInstance.Create(&[]model.BookModel{
+		{Id: 1, Name: "Operating System"},
+		{Id: 2, Name: "Theoretical Computer Science"},
+		{Id: 3, Name: "Computer Graphics"},
+	})
+
+	return tx.Error
 }
 
 // Get ...

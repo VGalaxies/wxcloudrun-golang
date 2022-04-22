@@ -1,3 +1,0 @@
-INSERT INTO `book_model` (`id`,`name`,`category`,`author`,`description`) VALUES (1,'Operating Systems: Three Easy Pieces',1,'Remzi H. Arpaci-Dusseau','');
-INSERT INTO `book_model` (`id`,`name`,`category`,`author`,`description`) VALUES (2,'Models of Computation',2,'Jeff Erickson','');
-INSERT INTO `book_model` (`id`,`name`,`category`,`author`,`description`) VALUES (3,'Fundamentals of Computer Graphics',3,'Peter Shirley','');
