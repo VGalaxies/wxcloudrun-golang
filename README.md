@@ -1,6 +1,21 @@
 # wxcloudrun-golang
 
+
+
+## note
+
+- [Limitations of the GET method in HTTP - Dropbox](https://dropbox.tech/developers/limitations-of-the-get-method-in-http)
+- 勿在 `init` 中进行数据插入
+- GORM
+
+https://gorm.io/zh_CN/docs/
+
+https://www.bilibili.com/video/BV1E64y1472a
+
+
+
 ## 目录结构说明
+
 ~~~
 .
 ├── Dockerfile                Dockerfile 文件
@@ -14,6 +29,8 @@
 ├── main.go                   主函数入口
 └── service                   接口服务逻辑目录
 ~~~
+
+
 
 ## 服务 API 文档
 
@@ -60,6 +77,12 @@
 
 ```
 curl -X POST -H 'content-type: application/json' -d '{"action": "exact", "hint": "Models of Computation"}' https://<云托管服务域名>/api/book
+```
+
+使用更友好的 `httpie`
+
+```
+http https://<云托管服务域名>/api/book action=exact hint="Models of Computation"
 ```
 
 ### `POST /api/category`
