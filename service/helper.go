@@ -23,7 +23,7 @@ type SessionResult struct {
 }
 
 // get action, hint
-func getBody(r *http.Request) (string, string, error) {
+func getBodyActionAndHint(r *http.Request) (string, string, error) {
 	decoder := json.NewDecoder(r.Body)
 	body := make(map[string]interface{})
 	if err := decoder.Decode(&body); err != nil {
@@ -45,7 +45,7 @@ func getBody(r *http.Request) (string, string, error) {
 }
 
 // get code
-func getCode(r *http.Request) (string, error) {
+func getBodyCode(r *http.Request) (string, error) {
 	decoder := json.NewDecoder(r.Body)
 	body := make(map[string]interface{})
 	if err := decoder.Decode(&body); err != nil {
@@ -62,7 +62,7 @@ func getCode(r *http.Request) (string, error) {
 }
 
 // get openid
-func getOpenId(r *http.Request) (string, error) {
+func getBodyOpenId(r *http.Request) (string, error) {
 	decoder := json.NewDecoder(r.Body)
 	body := make(map[string]interface{})
 	if err := decoder.Decode(&body); err != nil {
@@ -79,7 +79,7 @@ func getOpenId(r *http.Request) (string, error) {
 }
 
 // get openid, nickname, avatar
-func getUserInfo(r *http.Request) (string, string, string, error) {
+func getBodyUser(r *http.Request) (string, string, string, error) {
 	decoder := json.NewDecoder(r.Body)
 	body := make(map[string]interface{})
 	if err := decoder.Decode(&body); err != nil {
@@ -103,4 +103,31 @@ func getUserInfo(r *http.Request) (string, string, string, error) {
 	}
 
 	return openid.(string), nickname.(string), avatar.(string), nil
+}
+
+// get userid, bookid, comment
+func getBodyComment(r *http.Request) (string, string, string, error) {
+	decoder := json.NewDecoder(r.Body)
+	body := make(map[string]interface{})
+	if err := decoder.Decode(&body); err != nil {
+		return "", "", "", err
+	}
+	defer r.Body.Close()
+
+	userid, ok := body["userid"]
+	if !ok {
+		return "", "", "", fmt.Errorf("缺少 userid 参数")
+	}
+
+	bookid, ok := body["bookid"]
+	if !ok {
+		return "", "", "", fmt.Errorf("缺少 bookid 参数")
+	}
+
+	comment, ok := body["comment"]
+	if !ok {
+		return "", "", "", fmt.Errorf("缺少 comment 参数")
+	}
+
+	return userid.(string), bookid.(string), comment.(string), nil
 }

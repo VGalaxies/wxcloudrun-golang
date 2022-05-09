@@ -30,7 +30,7 @@ type UserModel struct {
 // 评论模型
 type CommentModel struct {
 	gorm.Model
-	UserOpenId int32
-	BookId     int32
-	Comment    string
+	UserId  string
+	BookId  int32
+	Comment string
 }

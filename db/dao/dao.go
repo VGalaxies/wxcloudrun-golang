@@ -132,3 +132,64 @@ func (imp *UserInterfaceImp) GetUserInfo(openid string) (*model.UserModel, error
 
 	return user, err
 }
+
+// ----------------------- //
+
+func (imp *CommentInterfaceImp) SetCommentInfo(userId string, bookIdStr string, comment string) error {
+	var err error
+
+	bookId, err := strconv.ParseInt(bookIdStr, 10, 32)
+	if err != nil {
+		err = errors.New("invalid bookId")
+		return err
+	}
+
+	cli := db.Get()
+	// TODO - integrity checking
+	tx := cli.Model(&model.CommentModel{}).Create(map[string]interface{}{
+		"user_id": userId,
+		"book_id": bookId,
+		"comment": comment,
+	})
+	err = tx.Error
+
+	return err
+}
+
+func (imp *CommentInterfaceImp) GetCommentInfoByUser(userId string) (*[]model.CommentModel, error) {
+	var err error
+	var comments = new([]model.CommentModel)
+
+	cli := db.Get()
+	tx := cli.Model(&model.CommentModel{}).Where("user_id = ?", userId).Find(comments)
+
+	if tx.RowsAffected == 0 {
+		err = errors.New("comment record not found")
+		return nil, err
+	}
+	err = tx.Error
+
+	return comments, err
+}
+
+func (imp *CommentInterfaceImp) GetCommentInfoByBook(bookIdStr string) (*[]model.CommentModel, error) {
+	var err error
+	var comments = new([]model.CommentModel)
+
+	bookId, err := strconv.ParseInt(bookIdStr, 10, 32)
+	if err != nil {
+		err = errors.New("invalid bookId")
+		return nil, err
+	}
+
+	cli := db.Get()
+	tx := cli.Model(&model.CommentModel{}).Where("book_id = ?", bookId).Find(comments)
+
+	if tx.RowsAffected == 0 {
+		err = errors.New("comment record not found")
+		return nil, err
+	}
+	err = tx.Error
+
+	return comments, err
+}

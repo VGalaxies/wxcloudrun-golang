@@ -20,6 +20,8 @@ func main() {
 	http.HandleFunc("/api/loginInit", service.LoginInitHandler)
 	http.HandleFunc("/api/loginGet", service.LoginGetHandler)
 	http.HandleFunc("/api/loginSet", service.LoginSetHandler)
+	http.HandleFunc("/api/commentSet", service.CommentSetHandler)
+	http.HandleFunc("/api/commentGet", service.CommentGetHandler)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }

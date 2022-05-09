@@ -39,6 +39,23 @@ type UserInterface interface {
 	GetUserInfo(string) (*model.UserModel, error)
 }
 
+// 用户数据模型实现
 type UserInterfaceImp struct{}
 
+// 用户数据模型实现实例
 var UserImp UserInterface = &UserInterfaceImp{}
+
+// ----------------------- //
+
+// 评论数据模型接口
+type CommentInterface interface {
+	SetCommentInfo(string, string, string) error
+	GetCommentInfoByUser(string) (*[]model.CommentModel, error)
+	GetCommentInfoByBook(string) (*[]model.CommentModel, error)
+}
+
+// 评论数据模型实现
+type CommentInterfaceImp struct{}
+
+// 评论数据模型实现实例
+var CommentImp CommentInterface = &CommentInterfaceImp{}

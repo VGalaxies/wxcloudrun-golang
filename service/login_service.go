@@ -12,7 +12,7 @@ func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	var model interface{}
 	if r.Method == http.MethodPost {
-		openid, err := getOpenId(r)
+		openid, err := getBodyOpenId(r)
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
@@ -42,7 +42,7 @@ func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
 func LoginSetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	if r.Method == http.MethodPost {
-		openid, nickname, avatar, err := getUserInfo(r)
+		openid, nickname, avatar, err := getBodyUser(r)
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
@@ -89,7 +89,7 @@ func LoginInitHandler(w http.ResponseWriter, r *http.Request) {
 		goto FINAL
 	}
 
-	code, err = getCode(r)
+	code, err = getBodyCode(r)
 	if err != nil {
 		res.Code = -1
 		res.ErrorMsg = err.Error()

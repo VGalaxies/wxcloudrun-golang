@@ -33,7 +33,7 @@ func CategoryGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CategoryGetDispatch(r *http.Request) (interface{}, error) {
-	action, hint, err := getBody(r)
+	action, hint, err := getBodyActionAndHint(r)
 	if err != nil {
 		return nil, err
 	}
