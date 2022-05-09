@@ -38,14 +38,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 					res.Data = nil
 				}
 
-				fmt.Println(body)
-
 				err = json.Unmarshal([]byte(body), &session)
 				if err != nil {
 					res.Code = -1
 					res.ErrorMsg = err.Error()
 					res.Data = nil
 				}
+
+				fmt.Println(session)
 
 				if session.ErrorMsg != "" {
 					res.Code = -1
