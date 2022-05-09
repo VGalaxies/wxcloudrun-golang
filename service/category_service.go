@@ -15,10 +15,7 @@ func CategoryGetHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
-			res.Data = nil
 		} else {
-			res.Code = 0
-			res.ErrorMsg = ""
 			res.Data = model
 		}
 	} else {
