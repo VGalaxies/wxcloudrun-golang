@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -28,9 +29,31 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 				res.ErrorMsg = err.Error()
 				res.Data = nil
 			} else {
-				res.Code = 0
-				res.ErrorMsg = ""
-				res.Data = resp.Body
+				var session SessionResult
+
+				body, err := ioutil.ReadAll(resp.Body)
+				if err != nil {
+					res.Code = -1
+					res.ErrorMsg = err.Error()
+					res.Data = nil
+				}
+
+				err = json.Unmarshal([]byte(body), &session)
+				if err != nil {
+					res.Code = -1
+					res.ErrorMsg = err.Error()
+					res.Data = nil
+				}
+
+				if session.ErrorMsg != "" {
+					res.Code = -1
+					res.ErrorMsg = session.ErrorMsg
+					res.Data = nil
+				} else {
+					res.Code = 0
+					res.ErrorMsg = ""
+					res.Data = session.OpenId
+				}
 			}
 		}
 	} else {

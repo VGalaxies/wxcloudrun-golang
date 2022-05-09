@@ -13,6 +13,15 @@ type JsonResult struct {
 	Data     interface{} `json:"data"`
 }
 
+// auth.code2Session 返回结构
+type SessionResult struct {
+	OpenId     string `json:"openid"`
+	SessionKey string `json:"session_key"`
+	UnionId    string `json:"unionid"`
+	ErrorCode  string `json:"errcode"`
+	ErrorMsg   string `json:"errmsg"`
+}
+
 // get action, hint
 func getBody(r *http.Request) (string, string, error) {
 	decoder := json.NewDecoder(r.Body)

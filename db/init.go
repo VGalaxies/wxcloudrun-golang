@@ -55,27 +55,36 @@ func Init() error {
 	dbInstance = db
 
 	// init table
-	if err = InitBook(); err != nil {
-		fmt.Println("DB Init error, err = ", err.Error())
-		return err
-	}
-
-	if err = InitCategory(); err != nil {
-		fmt.Println("DB Init error, err = ", err.Error())
-		return err
-	}
-
-	if err = InitUser(); err != nil {
-		fmt.Println("DB Init error, err = ", err.Error())
-		return err
-	}
-
-	if err = InitCategory(); err != nil {
-		fmt.Println("DB Init error, err = ", err.Error())
+	err = InitTable()
+	if err != nil {
 		return err
 	}
 
 	fmt.Println("finish init mysql with ", source)
+	return nil
+}
+
+func InitTable() error {
+	if err := InitBook(); err != nil {
+		fmt.Println("DB Init Table error, err = ", err.Error())
+		return err
+	}
+
+	if err := InitCategory(); err != nil {
+		fmt.Println("DB Init Table error, err = ", err.Error())
+		return err
+	}
+
+	if err := InitUser(); err != nil {
+		fmt.Println("DB Init Table error, err = ", err.Error())
+		return err
+	}
+
+	if err := InitComment(); err != nil {
+		fmt.Println("DB Init Table error, err = ", err.Error())
+		return err
+	}
+
 	return nil
 }
 

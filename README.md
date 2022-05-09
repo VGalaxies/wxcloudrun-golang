@@ -161,8 +161,6 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 - `data` 对象或对象数组
 - `errorMsg` 错误信息
 
-
-
 ### `POST /api/onLogin`
 
 #### 请求参数
@@ -171,4 +169,6 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 
 #### 响应结果
 
+- `code` 错误码
 - `data` - `3rd_session = openid`
+- `errorMsg` 错误信息
