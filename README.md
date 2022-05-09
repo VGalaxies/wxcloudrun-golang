@@ -203,7 +203,7 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 - `data` - 无
 - `errorMsg` - 错误信息
 
-### `POST /api/commentSet`
+### `POST /api/commentGet`
 
 获取评论信息
 
