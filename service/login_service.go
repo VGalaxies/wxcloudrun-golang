@@ -51,11 +51,11 @@ func LoginInitHandler(w http.ResponseWriter, r *http.Request) {
 		goto FINAL
 	}
 
-	if resp.Status != "200 OK" {
-		res.Code = -1
-		res.ErrorMsg = fmt.Sprintf("resp status: %s", resp.Status)
-		goto FINAL
-	}
+	// if resp.Status != "200 OK" {
+	// 	res.Code = -1
+	// 	res.ErrorMsg = fmt.Sprintf("resp status: %s", resp.Status)
+	// 	goto FINAL
+	// }
 
 	body, err = ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
