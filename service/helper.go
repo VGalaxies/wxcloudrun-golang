@@ -60,3 +60,47 @@ func getCode(r *http.Request) (string, error) {
 
 	return code.(string), nil
 }
+
+// get openid
+func getOpenId(r *http.Request) (string, error) {
+	decoder := json.NewDecoder(r.Body)
+	body := make(map[string]interface{})
+	if err := decoder.Decode(&body); err != nil {
+		return "", err
+	}
+	defer r.Body.Close()
+
+	openid, ok := body["openid"]
+	if !ok {
+		return "", fmt.Errorf("缺少 openid 参数")
+	}
+
+	return openid.(string), nil
+}
+
+// get openid, nickname, avatar
+func getUserInfo(r *http.Request) (string, string, string, error) {
+	decoder := json.NewDecoder(r.Body)
+	body := make(map[string]interface{})
+	if err := decoder.Decode(&body); err != nil {
+		return "", "", "", err
+	}
+	defer r.Body.Close()
+
+	openid, ok := body["openid"]
+	if !ok {
+		return "", "", "", fmt.Errorf("缺少 openid 参数")
+	}
+
+	nickname, ok := body["nickname"]
+	if !ok {
+		return "", "", "", fmt.Errorf("缺少 nickname 参数")
+	}
+
+	avatar, ok := body["avatar"]
+	if !ok {
+		return "", "", "", fmt.Errorf("缺少 avatar 参数")
+	}
+
+	return openid.(string), nickname.(string), avatar.(string), nil
+}

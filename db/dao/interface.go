@@ -39,6 +39,6 @@ type UserInterface interface {
 	GetUserInfo(string) (*model.UserModel, error)
 }
 
-// type UserInterfaceImp struct{}
+type UserInterfaceImp struct{}
 
-// var UserImp UserInterface = &UserInterfaceImp{}
+var UserImp UserInterface = &UserInterfaceImp{}

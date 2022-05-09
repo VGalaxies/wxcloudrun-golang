@@ -50,6 +50,8 @@ https://blog.csdn.net/michael_ouyang/article/details/72635263
 
 如何避免硬编码
 
+需要配置允许使用微信令牌的开放接口 `/sns/jscode2session`
+
 
 
 ## 目录结构说明
@@ -97,9 +99,9 @@ https://blog.csdn.net/michael_ouyang/article/details/72635263
 
 #### 响应结果
 
-- `code` 错误码
-- `data` 对象或对象数组
-- `errorMsg` 错误信息
+- `code` - 错误码
+- `data` - 对象或对象数组
+- `errorMsg` - 错误信息
 
 ##### 响应结果示例
 
@@ -137,11 +139,13 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 
 #### 响应结果
 
-- `code` 错误码
-- `data` 对象或对象数组
-- `errorMsg` 错误信息
+- `code` - 错误码
+- `data` - 对象或对象数组
+- `errorMsg` - 错误信息
 
 ### `POST /api/loginInit`
+
+获取用户 openid
 
 #### 请求参数
 
@@ -149,6 +153,36 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 
 #### 响应结果
 
-- `code` 错误码
+- `code` - 错误码
 - `data` - `3rd_session = openid`
-- `errorMsg` 错误信息
+- `errorMsg` - 错误信息
+
+### `POST /api/loginGet`
+
+根据 openid 获取用户信息
+
+#### 请求参数
+
+- `openid`
+
+#### 响应结果
+
+- `code` - 错误码
+- `data` - 对象
+- `errorMsg` - 错误信息
+
+### `POST /api/loginSet`
+
+设置用户信息
+
+#### 请求参数
+
+- `openid`
+- `nickname`
+- `avatar`
+
+#### 响应结果
+
+- `code` - 错误码
+- `data` - 无
+- `errorMsg` - 错误信息

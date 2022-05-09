@@ -100,3 +100,32 @@ func (imp *CategoryInterfaceImp) GetCategoryAll() (*[]model.CategoryModel, error
 }
 
 // ----------------------- //
+
+func (imp *UserInterfaceImp) SetUserInfo(openid string, nickname string, avatar string) error {
+	var err error
+
+	cli := db.Get()
+	tx := cli.Model(&model.UserModel{}).Create(map[string]interface{}{
+		"open_id":    openid,
+		"nick_name":  nickname,
+		"avatar_url": avatar,
+	})
+	err = tx.Error
+
+	return err
+}
+
+func (imp *UserInterfaceImp) GetUserInfo(openid string) (*model.UserModel, error) {
+	var err error
+	var user = new(model.UserModel)
+
+	cli := db.Get()
+	tx := cli.Model(&model.UserModel{}).Where("open_id = ?", openid).First(user)
+	if tx.RowsAffected == 0 {
+		err = errors.New("user not found")
+		return nil, err
+	}
+	err = tx.Error
+
+	return user, err
+}
