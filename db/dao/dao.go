@@ -61,6 +61,8 @@ func (imp *BookInterfaceImp) GetBookByCategory(categoryIdStr string) (*[]model.B
 	return books, err
 }
 
+// ----------------------- //
+
 func (imp *CategoryInterfaceImp) GetCategory(categoryIdStr string) (*model.CategoryModel, error) {
 	var err error
 	var category = new(model.CategoryModel)
@@ -96,3 +98,5 @@ func (imp *CategoryInterfaceImp) GetCategoryAll() (*[]model.CategoryModel, error
 
 	return categories, err
 }
+
+// ----------------------- //

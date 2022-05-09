@@ -46,29 +46,9 @@ https://blog.csdn.net/michael_ouyang/article/details/72635263
 
 `auth.code2Session`
 
-测试如下
-
-```
-http https://api.weixin.qq.com/sns/jscode2session\?appid\=wxdcab629e85115972\&secret\=093bb5adeb959c37e4d225a68123afcb\&js_code\=093xuSkl2r8b894cV9nl2a0sic2xuSkW\&grant_type\=authorization_code
-```
-
 注意到 `openid` 固定
 
-```json
-{
-    "openid": "ob0jR5aSCiRuRJwrK-icmBkwVhsg",
-    "session_key": "ipVKhMZIYyxw2P4sY/fNTQ=="
-}
-
-{
-    "openid": "ob0jR5aSCiRuRJwrK-icmBkwVhsg",
-    "session_key": "OewwI2LxqogJkEUfteBV6g=="
-}
-```
-
-
-
-
+如何避免硬编码
 
 
 
