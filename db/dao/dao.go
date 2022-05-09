@@ -103,9 +103,11 @@ func (imp *CategoryInterfaceImp) GetCategoryAll() (*[]model.CategoryModel, error
 
 func (imp *UserInterfaceImp) SetUserInfo(openid string, nickname string, avatar string) error {
 	var err error
+	var user = new(model.UserModel)
 
 	cli := db.Get()
-	cli.Delete(&model.UserModel{}, openid) // ignore return value
+	// ignore return value
+	cli.Model(&model.UserModel{}).Where("open_id = ?", openid).Delete(user)
 	tx := cli.Model(&model.UserModel{}).Create(map[string]interface{}{
 		"open_id":    openid,
 		"nick_name":  nickname,
