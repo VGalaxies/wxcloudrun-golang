@@ -105,7 +105,7 @@ func (imp *UserInterfaceImp) SetUserInfo(openid string, nickname string, avatar 
 	var err error
 
 	cli := db.Get()
-	cli.Model(&model.UserModel{}).Delete("open_id = ?", openid) // ignore return value
+	cli.Delete(&model.UserModel{}, openid) // ignore return value
 	tx := cli.Model(&model.UserModel{}).Create(map[string]interface{}{
 		"open_id":    openid,
 		"nick_name":  nickname,
