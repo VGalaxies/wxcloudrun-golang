@@ -7,6 +7,14 @@ import (
 	"net/http"
 )
 
+func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func LoginSetHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
 func code2Session(code string) (resp *http.Response, err error) {
 	url := "https://api.weixin.qq.com/sns/jscode2session?appid=wxdcab629e85115972&secret=093bb5adeb959c37e4d225a68123afcb&js_code="
 	url += code
@@ -14,7 +22,7 @@ func code2Session(code string) (resp *http.Response, err error) {
 	return http.Get(url)
 }
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+func LoginInitHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 
 	var err error

@@ -28,7 +28,7 @@ https://blog.csdn.net/michael_ouyang/article/details/72635263
 
 
 
-<u>*获取登录凭证*</u>
+<u>获取登录凭证</u>
 
 `wx.login`
 
@@ -141,7 +141,7 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 - `data` 对象或对象数组
 - `errorMsg` 错误信息
 
-### `POST /api/onLogin`
+### `POST /api/loginInit`
 
 #### 请求参数
 
