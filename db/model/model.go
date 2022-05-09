@@ -1,5 +1,7 @@
 package model
 
+import "gorm.io/gorm"
+
 // 书籍模型
 type BookModel struct {
 	Id          int32
@@ -8,7 +10,6 @@ type BookModel struct {
 	Author      string
 	Description string
 	ImageUrl    string
-	Comments    []CommentModel
 }
 
 // 书籍分类模型
@@ -19,7 +20,7 @@ type CategoryModel struct {
 
 // 用户模型
 type UserModel struct {
-	Id        int32
+	gorm.Model
 	OpenId    string
 	NickName  string
 	AvatarUrl string
@@ -29,8 +30,8 @@ type UserModel struct {
 
 // 评论模型
 type CommentModel struct {
-	Id          int32
-	UserModelId int32
-	BookModelId int32
-	Comment     string
+	gorm.Model
+	UserId  int32
+	BookId  int32
+	Comment string
 }

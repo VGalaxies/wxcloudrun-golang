@@ -32,11 +32,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 				var session SessionResult
 
 				body, err := ioutil.ReadAll(resp.Body)
+				defer resp.Body.Close()
 				if err != nil {
 					res.Code = -1
 					res.ErrorMsg = err.Error()
 					res.Data = nil
 				}
+
+				fmt.Println(string(body))
 
 				err = json.Unmarshal([]byte(body), &session)
 				if err != nil {
@@ -47,7 +50,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 				fmt.Println(session)
 
-				if session.ErrorMsg != "" {
+				if session.ErrorCode != 0 {
 					res.Code = -1
 					res.ErrorMsg = session.ErrorMsg
 					res.Data = nil

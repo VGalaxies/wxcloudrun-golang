@@ -9,7 +9,7 @@ import (
 // JsonResult 返回结构
 type JsonResult struct {
 	Code     int         `json:"code"`
-	ErrorMsg string      `json:"errorMsg,omitempty"`
+	ErrorMsg string      `json:"errorMsg"`
 	Data     interface{} `json:"data"`
 }
 
@@ -18,7 +18,7 @@ type SessionResult struct {
 	OpenId     string `json:"openid"`
 	SessionKey string `json:"session_key"`
 	UnionId    string `json:"unionid"`
-	ErrorCode  string `json:"errcode"`
+	ErrorCode  int    `json:"errcode"`
 	ErrorMsg   string `json:"errmsg"`
 }
 
