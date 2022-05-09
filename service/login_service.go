@@ -6,6 +6,13 @@ import (
 	"net/http"
 )
 
+func code2Session(code string) (resp *http.Response, err error) {
+	url := "https://api.weixin.qq.com/sns/jscode2session?appid=wxdcab629e85115972&secret=093bb5adeb959c37e4d225a68123afcb&js_code="
+	url += code
+	url += "&grant_type=authorization_code"
+	return http.Get(url)
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	if r.Method == http.MethodPost {
@@ -15,9 +22,16 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			res.ErrorMsg = err.Error()
 			res.Data = nil
 		} else {
-			res.Code = 0
-			res.ErrorMsg = ""
-			res.Data = code
+			resp, err := code2Session(code)
+			if err != nil {
+				res.Code = -1
+				res.ErrorMsg = err.Error()
+				res.Data = nil
+			} else {
+				res.Code = 0
+				res.ErrorMsg = ""
+				res.Data = resp.Body
+			}
 		}
 	} else {
 		res.Code = -1

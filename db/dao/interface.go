@@ -8,7 +8,7 @@ import (
 type BookInterface interface {
 	GetBookByName(string) (*model.BookModel, error)
 	GetBookByNameFzf(string) (*[]model.BookModel, error)
-	GetBookByNameCate(string) (*[]model.BookModel, error)
+	GetBookByCategory(string) (*[]model.BookModel, error)
 }
 
 // 书籍数据模型实现

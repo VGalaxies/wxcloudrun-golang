@@ -65,6 +65,16 @@ func Init() error {
 		return err
 	}
 
+	if err = InitUser(); err != nil {
+		fmt.Println("DB Init error, err = ", err.Error())
+		return err
+	}
+
+	if err = InitCategory(); err != nil {
+		fmt.Println("DB Init error, err = ", err.Error())
+		return err
+	}
+
 	fmt.Println("finish init mysql with ", source)
 	return nil
 }
@@ -85,6 +95,30 @@ func InitCategory() error {
 	migrator := dbInstance.Migrator()
 	if !migrator.HasTable(&model.CategoryModel{}) {
 		err := migrator.CreateTable(model.CategoryModel{})
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func InitUser() error {
+	migrator := dbInstance.Migrator()
+	if !migrator.HasTable(&model.UserModel{}) {
+		err := migrator.CreateTable(model.UserModel{})
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func InitComment() error {
+	migrator := dbInstance.Migrator()
+	if !migrator.HasTable(&model.CommentModel{}) {
+		err := migrator.CreateTable(model.CommentModel{})
 		if err != nil {
 			return err
 		}

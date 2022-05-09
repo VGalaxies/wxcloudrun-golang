@@ -39,7 +39,7 @@ func (imp *BookInterfaceImp) GetBookByNameFzf(name string) (*[]model.BookModel, 
 	return books, err
 }
 
-func (imp *BookInterfaceImp) GetBookByNameCate(categoryIdStr string) (*[]model.BookModel, error) {
+func (imp *BookInterfaceImp) GetBookByCategory(categoryIdStr string) (*[]model.BookModel, error) {
 	var err error
 	var books = new([]model.BookModel)
 

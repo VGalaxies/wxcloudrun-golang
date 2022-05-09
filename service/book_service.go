@@ -53,7 +53,7 @@ func BookGetDispatch(r *http.Request) (interface{}, error) {
 			return nil, err
 		}
 	} else if action == "category" {
-		model, err = dao.BookImp.GetBookByNameCate(hint)
+		model, err = dao.BookImp.GetBookByCategory(hint)
 		if err != nil {
 			return nil, err
 		}
