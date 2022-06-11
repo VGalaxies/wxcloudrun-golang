@@ -33,10 +33,13 @@ func CategoryGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CategoryGetDispatch(r *http.Request) (interface{}, error) {
-	action, hint, err := getBodyActionAndHint(r)
+	tmp, err := getBody(r, []string{"action", "hint"})
 	if err != nil {
 		return nil, err
 	}
+
+	action := tmp[0]
+	hint := tmp[1]
 
 	var model interface{}
 	if action == "single" {

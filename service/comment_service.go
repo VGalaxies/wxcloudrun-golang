@@ -10,11 +10,14 @@ import (
 func CommentSetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	if r.Method == http.MethodPost {
-		userid, bookid, comment, err := getBodyComment(r)
+		tmp, err := getBody(r, []string{"userid", "bookid", "comment"})
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
 		} else {
+			userid := tmp[0]
+			bookid := tmp[1]
+			comment := tmp[2]
 			err = dao.CommentImp.SetCommentInfo(userid, bookid, comment)
 			if err != nil {
 				res.Code = -1
@@ -60,10 +63,13 @@ func CommentGetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CommentGetDispatch(r *http.Request) (interface{}, error) {
-	action, hint, err := getBodyActionAndHint(r)
+	tmp, err := getBody(r, []string{"action", "hint"})
 	if err != nil {
 		return nil, err
 	}
+
+	action := tmp[0]
+	hint := tmp[1]
 
 	var model interface{}
 	if action == "user" {

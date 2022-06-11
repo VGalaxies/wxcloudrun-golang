@@ -12,11 +12,12 @@ func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	var model interface{}
 	if r.Method == http.MethodPost {
-		openid, err := getBodyOpenId(r)
+		tmp, err := getBody(r, []string{"openid"})
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
 		} else {
+			openid := tmp[0]
 			model, err = dao.UserImp.GetUserInfo(openid)
 			if err != nil {
 				res.Code = -1
@@ -42,11 +43,14 @@ func LoginGetHandler(w http.ResponseWriter, r *http.Request) {
 func LoginSetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	if r.Method == http.MethodPost {
-		openid, nickname, avatar, err := getBodyUser(r)
+		tmp, err := getBody(r, []string{"openid", "nickname", "avatar"})
 		if err != nil {
 			res.Code = -1
 			res.ErrorMsg = err.Error()
 		} else {
+			openid := tmp[0]
+			nickname := tmp[1]
+			avatar := tmp[2]
 			err = dao.UserImp.SetUserInfo(openid, nickname, avatar)
 			if err != nil {
 				res.Code = -1
@@ -82,6 +86,7 @@ func LoginInitHandler(w http.ResponseWriter, r *http.Request) {
 	var resp *http.Response
 	var body []byte
 	var session SessionResult
+	var tmp []string
 
 	if r.Method != http.MethodPost {
 		res.Code = -1
@@ -89,12 +94,13 @@ func LoginInitHandler(w http.ResponseWriter, r *http.Request) {
 		goto FINAL
 	}
 
-	code, err = getBodyCode(r)
+	tmp, err = getBody(r, []string{"code"})
 	if err != nil {
 		res.Code = -1
 		res.ErrorMsg = err.Error()
 		goto FINAL
 	}
+	code = tmp[0]
 
 	resp, err = code2Session(code)
 	if err != nil {
