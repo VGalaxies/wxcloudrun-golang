@@ -85,6 +85,11 @@ func InitTable() error {
 		return err
 	}
 
+	if err := InitCollection(); err != nil {
+		fmt.Println("DB Init Table error, err = ", err.Error())
+		return err
+	}
+
 	return nil
 }
 
@@ -128,6 +133,18 @@ func InitComment() error {
 	migrator := dbInstance.Migrator()
 	if !migrator.HasTable(&model.CommentModel{}) {
 		err := migrator.CreateTable(model.CommentModel{})
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func InitCollection() error {
+	migrator := dbInstance.Migrator()
+	if !migrator.HasTable(&model.CollectionModel{}) {
+		err := migrator.CreateTable(model.CollectionModel{})
 		if err != nil {
 			return err
 		}
