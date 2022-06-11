@@ -131,3 +131,25 @@ func getBodyComment(r *http.Request) (string, string, string, error) {
 
 	return userid.(string), bookid.(string), comment.(string), nil
 }
+
+// get userid, bookid
+func getBodyUserAndBook(r *http.Request) (string, string, error) {
+	decoder := json.NewDecoder(r.Body)
+	body := make(map[string]interface{})
+	if err := decoder.Decode(&body); err != nil {
+		return "", "", err
+	}
+	defer r.Body.Close()
+
+	userid, ok := body["userid"]
+	if !ok {
+		return "", "", fmt.Errorf("缺少 userid 参数")
+	}
+
+	bookid, ok := body["bookid"]
+	if !ok {
+		return "", "", fmt.Errorf("缺少 bookid 参数")
+	}
+
+	return userid.(string), bookid.(string), nil
+}

@@ -23,8 +23,6 @@ type UserModel struct {
 	OpenId    string `gorm:"primaryKey"`
 	NickName  string
 	AvatarUrl string
-	// RecentBooks   []BookModel
-	// FavoriteBooks []BookModel
 }
 
 // 评论模型
@@ -33,4 +31,11 @@ type CommentModel struct {
 	UserId  string
 	BookId  int32
 	Comment string
+}
+
+// 收藏模型
+type CollectionModel struct {
+	gorm.Model
+	UserId string
+	BookId int32
 }

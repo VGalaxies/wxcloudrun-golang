@@ -22,6 +22,8 @@ func main() {
 	http.HandleFunc("/api/loginSet", service.LoginSetHandler)
 	http.HandleFunc("/api/commentSet", service.CommentSetHandler)
 	http.HandleFunc("/api/commentGet", service.CommentGetHandler)
+	http.HandleFunc("/api/collectionSet", service.CollectionSetHandler)
+	http.HandleFunc("/api/collectionGet", service.CollectionGetHandler)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }

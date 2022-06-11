@@ -219,5 +219,39 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 #### 响应结果
 
 - `code` - 错误码
-- `data` - 对象
+- `data` - 对象数组
+- `errorMsg` - 错误信息
+
+### `POST /api/collectionSet`
+
+更新收藏信息
+
+#### 请求参数
+
+- `userid` - `openid`
+- `bookid` - `int` 字面量
+
+#### 响应结果
+
+- `code` - 错误码
+- `data` - 无
+- `errorMsg` - 错误信息
+
+### `POST /api/collectionGet`
+
+获取收藏信息
+
+#### 请求参数
+
+- `action` - `string` 字面量
+  - `user`
+  - `book`
+- `hint`
+  - `userId` - `string` 字面量
+  - `bookId` - `int` 字面量
+
+#### 响应结果
+
+- `code` - 错误码
+- `data` - 对象数组
 - `errorMsg` - 错误信息

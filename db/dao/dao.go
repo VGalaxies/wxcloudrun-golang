@@ -193,3 +193,63 @@ func (imp *CommentInterfaceImp) GetCommentInfoByBook(bookIdStr string) (*[]model
 
 	return comments, err
 }
+
+// ----------------------- //
+
+func (imp *CollectionInterfaceImp) SetCollectionInfo(userId string, bookIdStr string) error {
+	var err error
+
+	bookId, err := strconv.ParseInt(bookIdStr, 10, 32)
+	if err != nil {
+		err = errors.New("invalid bookId")
+		return err
+	}
+
+	cli := db.Get()
+	// TODO - integrity checking
+	tx := cli.Model(&model.CollectionModel{}).Create(map[string]interface{}{
+		"user_id": userId,
+		"book_id": bookId,
+	})
+	err = tx.Error
+
+	return err
+}
+
+func (imp *CollectionInterfaceImp) GetCollectionInfoByUser(userId string) (*[]model.CollectionModel, error) {
+	var err error
+	var collections = new([]model.CollectionModel)
+
+	cli := db.Get()
+	tx := cli.Model(&model.CollectionModel{}).Where("user_id = ?", userId).Find(collections)
+
+	if tx.RowsAffected == 0 {
+		err = errors.New("collection record not found")
+		return nil, err
+	}
+	err = tx.Error
+
+	return collections, err
+}
+
+func (imp *CollectionInterfaceImp) GetCollectionInfoByBook(bookIdStr string) (*[]model.CollectionModel, error) {
+	var err error
+	var collections = new([]model.CollectionModel)
+
+	bookId, err := strconv.ParseInt(bookIdStr, 10, 32)
+	if err != nil {
+		err = errors.New("invalid bookId")
+		return nil, err
+	}
+
+	cli := db.Get()
+	tx := cli.Model(&model.CollectionModel{}).Where("book_id = ?", bookId).Find(collections)
+
+	if tx.RowsAffected == 0 {
+		err = errors.New("collection record not found")
+		return nil, err
+	}
+	err = tx.Error
+
+	return collections, err
+}
