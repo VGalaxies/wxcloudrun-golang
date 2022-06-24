@@ -166,7 +166,7 @@ func (imp *CommentInterfaceImp) SetCommentInfo(userId string, bookIdStr string, 
 	}
 
 	cli := db.Get()
-	// TODO - integrity checking
+	// allow duplicated comments
 	tx := cli.Model(&model.CommentModel{}).Create(map[string]interface{}{
 		"user_id": userId,
 		"book_id": bookId,
@@ -227,14 +227,18 @@ func (imp *CollectionInterfaceImp) SetCollectionInfo(userId string, bookIdStr st
 	}
 
 	cli := db.Get()
-	// TODO - integrity checking
-	tx := cli.Model(&model.CollectionModel{}).Create(map[string]interface{}{
-		"user_id": userId,
-		"book_id": bookId,
-	})
-	err = tx.Error
+	// don't allow duplicated collections
+	tx := cli.Model(&model.CollectionModel{}).Where("user_id = ? AND book_id = ?", userId, bookId).Find(nil)
+	if tx.RowsAffected == 0 {
+		tx := cli.Model(&model.CollectionModel{}).Create(map[string]interface{}{
+			"user_id": userId,
+			"book_id": bookId,
+		})
+		err = tx.Error
+		return err
+	}
 
-	return err
+	return errors.New("duplicated collection")
 }
 
 func (imp *CollectionInterfaceImp) UnsetCollectionInfo(userId string, bookIdStr string) error {
@@ -247,7 +251,6 @@ func (imp *CollectionInterfaceImp) UnsetCollectionInfo(userId string, bookIdStr 
 	}
 
 	cli := db.Get()
-	// TODO - integrity checking
 	tx := cli.Where("user_id = ? AND book_id = ?", userId, bookId).Delete(&model.CollectionModel{})
 	err = tx.Error
 
