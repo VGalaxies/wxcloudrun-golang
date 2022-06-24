@@ -57,6 +57,11 @@ func BookGetDispatch(r *http.Request) (interface{}, error) {
 		if err != nil {
 			return nil, err
 		}
+	} else if action == "id" {
+		model, err = dao.BookImp.GetBookById(hint)
+		if err != nil {
+			return nil, err
+		}
 	} else {
 		err = fmt.Errorf("参数 action : %s 错误", action)
 	}

@@ -6,6 +6,7 @@ import (
 
 // 书籍数据模型接口
 type BookInterface interface {
+	GetBookById(string) (*model.BookModel, error)
 	GetBookByName(string) (*model.BookModel, error)
 	GetBookByNameFzf(string) (*[]model.BookModel, error)
 	GetBookByCategory(string) (*[]model.BookModel, error)

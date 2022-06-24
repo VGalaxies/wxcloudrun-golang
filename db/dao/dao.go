@@ -8,6 +8,27 @@ import (
 	"wxcloudrun-golang/db/model"
 )
 
+func (imp *BookInterfaceImp) GetBookById(idStr string) (*model.BookModel, error) {
+	var err error
+	var book = new(model.BookModel)
+
+	id, err := strconv.ParseInt(idStr, 10, 32)
+	if err != nil {
+		err = errors.New("invalid id")
+		return nil, err
+	}
+
+	cli := db.Get()
+	tx := cli.Model(&model.BookModel{}).Where("id = ?", id).First(book)
+	if tx.RowsAffected == 0 {
+		err = errors.New("book record not found")
+		return nil, err
+	}
+	err = tx.Error
+
+	return book, err
+}
+
 func (imp *BookInterfaceImp) GetBookByName(name string) (*model.BookModel, error) {
 	var err error
 	var book = new(model.BookModel)

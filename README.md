@@ -81,12 +81,13 @@ https://blog.csdn.net/michael_ouyang/article/details/72635263
 #### 请求参数
 
 - `action` - `string` 字面量
+  - `id` - 精确
   - `exact` - 精确
   - `fuzzy` - 模糊
   - `category` - 分类
 - `hint` - `string` 类型
-  - `name`
-  - `categoryId` - `int` 字面量
+  - `name` - `string` 字面量
+  - `id` / `categoryId` - `int` 字面量
 
 ##### 请求参数示例
 
