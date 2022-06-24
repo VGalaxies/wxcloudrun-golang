@@ -7,6 +7,36 @@ import (
 	"wxcloudrun-golang/db/dao"
 )
 
+func CollectionUnsetHandler(w http.ResponseWriter, r *http.Request) {
+	res := &JsonResult{}
+	if r.Method == http.MethodPost {
+		tmp, err := getBody(r, []string{"userid", "bookid"})
+		if err != nil {
+			res.Code = -1
+			res.ErrorMsg = err.Error()
+		} else {
+			userid := tmp[0]
+			bookid := tmp[1]
+			err = dao.CollectionImp.UnsetCollectionInfo(userid, bookid)
+			if err != nil {
+				res.Code = -1
+				res.ErrorMsg = err.Error()
+			}
+		}
+	} else {
+		res.Code = -1
+		res.ErrorMsg = fmt.Sprintf("请求方法 %s 不支持", r.Method)
+	}
+
+	msg, err := json.Marshal(res)
+	if err != nil {
+		fmt.Fprint(w, "内部错误")
+		return
+	}
+	w.Header().Set("content-type", "application/json")
+	w.Write(msg)
+}
+
 func CollectionSetHandler(w http.ResponseWriter, r *http.Request) {
 	res := &JsonResult{}
 	if r.Method == http.MethodPost {

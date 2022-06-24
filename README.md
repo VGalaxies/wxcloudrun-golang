@@ -225,7 +225,22 @@ http https://<云托管服务域名>/api/book action=exact hint="Models of Compu
 
 ### `POST /api/collectionSet`
 
-更新收藏信息
+添加收藏信息
+
+#### 请求参数
+
+- `userid` - `openid`
+- `bookid` - `int` 字面量
+
+#### 响应结果
+
+- `code` - 错误码
+- `data` - 无
+- `errorMsg` - 错误信息
+
+### `POST /api/collectionUnset`
+
+删除收藏信息
 
 #### 请求参数
 

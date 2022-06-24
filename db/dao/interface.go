@@ -66,6 +66,7 @@ var CommentImp CommentInterface = &CommentInterfaceImp{}
 // 收藏数据模型接口
 type CollectionInterface interface {
 	SetCollectionInfo(string, string) error
+	UnsetCollectionInfo(string, string) error
 	GetCollectionInfoByUser(string) (*[]model.CollectionModel, error)
 	GetCollectionInfoByBook(string) (*[]model.CollectionModel, error)
 }

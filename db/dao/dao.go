@@ -237,6 +237,27 @@ func (imp *CollectionInterfaceImp) SetCollectionInfo(userId string, bookIdStr st
 	return err
 }
 
+func (imp *CollectionInterfaceImp) UnsetCollectionInfo(userId string, bookIdStr string) error {
+	var err error
+
+	bookId, err := strconv.ParseInt(bookIdStr, 10, 32)
+	if err != nil {
+		err = errors.New("invalid bookId")
+		return err
+	}
+
+	var collection = new(model.CollectionModel)
+	collection.UserId = userId
+	collection.BookId = int32(bookId)
+
+	cli := db.Get()
+	// TODO - integrity checking
+	tx := cli.Model(&model.CollectionModel{}).Delete(&collection)
+	err = tx.Error
+
+	return err
+}
+
 func (imp *CollectionInterfaceImp) GetCollectionInfoByUser(userId string) (*[]model.CollectionModel, error) {
 	var err error
 	var collections = new([]model.CollectionModel)
