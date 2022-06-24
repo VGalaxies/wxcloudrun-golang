@@ -246,13 +246,9 @@ func (imp *CollectionInterfaceImp) UnsetCollectionInfo(userId string, bookIdStr 
 		return err
 	}
 
-	var collection = new(model.CollectionModel)
-	collection.UserId = userId
-	collection.BookId = int32(bookId)
-
 	cli := db.Get()
 	// TODO - integrity checking
-	tx := cli.Model(&model.CollectionModel{}).Delete(&collection)
+	tx := cli.Where("user_id = ? AND book_id = ?", userId, bookId).Delete(&model.CollectionModel{})
 	err = tx.Error
 
 	return err
